@@ -26,5 +26,6 @@ def load_stars() -> list[Star]:
     global _cache
     if _cache is None:
         with open(_DATA_PATH) as f:
-            _cache = json.load(f)
+            raw = json.load(f)
+        _cache = [s for s in raw if s.get("proper") != "Sol"]
     return _cache
