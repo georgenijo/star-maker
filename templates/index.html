@@ -18,7 +18,7 @@
                 <form method="POST" action="/generate">
                     <label for="location_name">Location Name</label>
                     <input type="text" id="location_name" name="location_name"
-                           placeholder="910 @ 400 Fenway"
+                           placeholder="New York, NY"
                            value="{{ form_data.get('location_name', '') }}">
 
                     <div class="form-row">
@@ -26,13 +26,13 @@
                             <label for="lat">Latitude</label>
                             <input type="number" id="lat" name="lat"
                                    step="0.0001"
-                                   value="{{ form_data.get('lat', '42.3601') }}">
+                                   value="{{ form_data.get('lat', '40.7128') }}">
                         </div>
                         <div>
                             <label for="lon">Longitude</label>
                             <input type="number" id="lon" name="lon"
                                    step="0.0001"
-                                   value="{{ form_data.get('lon', '-71.0589') }}">
+                                   value="{{ form_data.get('lon', '-74.0060') }}">
                         </div>
                     </div>
 
@@ -68,8 +68,8 @@
                 {% if svg %}
                 <form method="POST" action="/download/svg">
                     <input type="hidden" name="location_name" value="{{ form_data.get('location_name', '') }}">
-                    <input type="hidden" name="lat" value="{{ form_data.get('lat', '42.3601') }}">
-                    <input type="hidden" name="lon" value="{{ form_data.get('lon', '-71.0589') }}">
+                    <input type="hidden" name="lat" value="{{ form_data.get('lat', '40.7128') }}">
+                    <input type="hidden" name="lon" value="{{ form_data.get('lon', '-74.0060') }}">
                     <input type="hidden" name="date" value="{{ form_data.get('date', '') }}">
                     <input type="hidden" name="time" value="{{ form_data.get('time', '21:00') }}">
                     <input type="hidden" name="tz" value="{{ form_data.get('tz', 'America/New_York') }}">
@@ -82,8 +82,8 @@
 
                 <form method="POST" action="/download/png">
                     <input type="hidden" name="location_name" value="{{ form_data.get('location_name', '') }}">
-                    <input type="hidden" name="lat" value="{{ form_data.get('lat', '42.3601') }}">
-                    <input type="hidden" name="lon" value="{{ form_data.get('lon', '-71.0589') }}">
+                    <input type="hidden" name="lat" value="{{ form_data.get('lat', '40.7128') }}">
+                    <input type="hidden" name="lon" value="{{ form_data.get('lon', '-74.0060') }}">
                     <input type="hidden" name="date" value="{{ form_data.get('date', '') }}">
                     <input type="hidden" name="time" value="{{ form_data.get('time', '21:00') }}">
                     <input type="hidden" name="tz" value="{{ form_data.get('tz', 'America/New_York') }}">
