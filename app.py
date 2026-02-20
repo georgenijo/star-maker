@@ -6,7 +6,14 @@ Routes:
     POST /download/svg  -- SVG file download
     POST /download/png  -- PNG via CairoSVG (graceful fallback)
 """
+import os
+import sys
 from datetime import datetime
+
+# Ensure cairocffi can find the Cairo C library on macOS (Homebrew)
+if sys.platform == "darwin" and "DYLD_FALLBACK_LIBRARY_PATH" not in os.environ:
+    homebrew_lib = "/opt/homebrew/lib" if os.path.isdir("/opt/homebrew/lib") else "/usr/local/lib"
+    os.environ["DYLD_FALLBACK_LIBRARY_PATH"] = homebrew_lib
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from flask import Flask, render_template, request, Response
