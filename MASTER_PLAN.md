@@ -92,6 +92,10 @@ Phase 4:
   Issues #14 + #15 + #17 in parallel, then Issue #16 (code quality), then final gate
 ```
 
+### Blocker Policy
+
+**If you hit a blocker or open question during implementation — skip it.** Do not stop, do not ask, do not loop. Leave a `# TODO: <description of blocker>` comment in the code, move on to the next task, and keep building. After all implementation is complete, circle back and address every `TODO` blocker in a dedicated cleanup pass at the end.
+
 ### Error Recovery
 
 If a subagent's code fails the smoke test:
