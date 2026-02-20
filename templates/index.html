@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Map Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Star Map Generator</h1>
+        <div class="main-layout">
+            <div class="form-section">
+                {% if error %}
+                <div class="error-box">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST" action="/generate">
+                    <label for="location_name">Location Name</label>
+                    <input type="text" id="location_name" name="location_name"
+                           placeholder="910 @ 400 Fenway"
+                           value="{{ form_data.get('location_name', '') }}">
+
+                    <div class="form-row">
+                        <div>
+                            <label for="lat">Latitude</label>
+                            <input type="number" id="lat" name="lat"
+                                   step="0.0001"
+                                   value="{{ form_data.get('lat', '42.3601') }}">
+                        </div>
+                        <div>
+                            <label for="lon">Longitude</label>
+                            <input type="number" id="lon" name="lon"
+                                   step="0.0001"
+                                   value="{{ form_data.get('lon', '-71.0589') }}">
+                        </div>
+                    </div>
+
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date"
+                           value="{{ form_data.get('date', today) }}">
+
+                    <label for="time">Time</label>
+                    <input type="time" id="time" name="time"
+                           value="{{ form_data.get('time', '21:00') }}">
+
+                    <label for="tz">Timezone</label>
+                    <select id="tz" name="tz">
+                        {% for tz in timezones %}
+                        <option value="{{ tz }}" {% if tz == form_data.get('tz', 'America/New_York') %}selected{% endif %}>{{ tz }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="message">Message</label>
+                    <input type="text" id="message" name="message"
+                           placeholder="The night we met..."
+                           value="{{ form_data.get('message', '') }}">
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="constellations" name="constellations"
+                               {% if form_data.get('constellations', 'on') == 'on' %}checked{% endif %}>
+                        <label for="constellations">Show constellation lines</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Generate Star Map</button>
+                </form>
+
+                {% if svg %}
+                <form method="POST" action="/download/svg">
+                    <input type="hidden" name="location_name" value="{{ form_data.get('location_name', '') }}">
+                    <input type="hidden" name="lat" value="{{ form_data.get('lat', '42.3601') }}">
+                    <input type="hidden" name="lon" value="{{ form_data.get('lon', '-71.0589') }}">
+                    <input type="hidden" name="date" value="{{ form_data.get('date', '') }}">
+                    <input type="hidden" name="time" value="{{ form_data.get('time', '21:00') }}">
+                    <input type="hidden" name="tz" value="{{ form_data.get('tz', 'America/New_York') }}">
+                    <input type="hidden" name="message" value="{{ form_data.get('message', '') }}">
+                    {% if form_data.get('constellations', 'on') == 'on' %}
+                    <input type="hidden" name="constellations" value="on">
+                    {% endif %}
+                    <button type="submit" class="btn btn-download">Download SVG</button>
+                </form>
+
+                <form method="POST" action="/download/png">
+                    <input type="hidden" name="location_name" value="{{ form_data.get('location_name', '') }}">
+                    <input type="hidden" name="lat" value="{{ form_data.get('lat', '42.3601') }}">
+                    <input type="hidden" name="lon" value="{{ form_data.get('lon', '-71.0589') }}">
+                    <input type="hidden" name="date" value="{{ form_data.get('date', '') }}">
+                    <input type="hidden" name="time" value="{{ form_data.get('time', '21:00') }}">
+                    <input type="hidden" name="tz" value="{{ form_data.get('tz', 'America/New_York') }}">
+                    <input type="hidden" name="message" value="{{ form_data.get('message', '') }}">
+                    {% if form_data.get('constellations', 'on') == 'on' %}
+                    <input type="hidden" name="constellations" value="on">
+                    {% endif %}
+                    <button type="submit" class="btn btn-download">Download PNG</button>
+                </form>
+                {% endif %}
+            </div>
+
+            <div class="preview-section">
+                {% if svg %}
+                {{ svg | safe }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
