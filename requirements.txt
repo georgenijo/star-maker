@@ -1,0 +1,4 @@
+flask>=3.0
+astropy>=6.0
+numpy>=1.26
+cairosvg>=2.7

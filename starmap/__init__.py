@@ -1,0 +1,1 @@
+"""Star map poster generator."""
