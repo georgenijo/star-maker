@@ -197,6 +197,13 @@ def render_star_map(
     for i in range(len(sx)):
         r = mag_to_radius(vis_mag[i])
         op = mag_to_opacity(vis_mag[i])
+        # Glow for bright stars
+        if vis_mag[i] < 1.0:
+            glow_r = r * 3.0
+            parts.append(
+                f'<circle cx="{sx[i]:.1f}" cy="{sy[i]:.1f}" r="{glow_r:.2f}" '
+                f'fill="#ffffff" opacity="0.08"/>'
+            )
         parts.append(
             f'<circle cx="{sx[i]:.1f}" cy="{sy[i]:.1f}" r="{r:.2f}" '
             f'fill="#ffffff" opacity="{op:.2f}"/>'
@@ -214,10 +221,11 @@ def render_star_map(
     coords_text = f"{decimal_to_dms(lat, True)}  {decimal_to_dms(lon, False)}"
     date_text = format_datetime(dt, tz_name).upper()
 
+    msg_size = TEXT_SIZE_LINE1 if len(message) <= 40 else 22
     parts.append(
         f'<text x="{TEXT_X}" y="{TEXT_LINE1_Y}" text-anchor="middle" '
         f'fill="{TEXT_COLOR}" font-family="{TEXT_FONT}" '
-        f'font-size="{TEXT_SIZE_LINE1}" letter-spacing="{TEXT_LETTER_SPACING}">'
+        f'font-size="{msg_size}" letter-spacing="{TEXT_LETTER_SPACING}">'
         f'{msg_escaped}</text>'
     )
     parts.append(
